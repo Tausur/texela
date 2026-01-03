@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -37,11 +36,8 @@ export default function Navbar() {
           className="flex items-center font-bold text-black cursor-pointer transition-transform duration-300 hover:scale-105"
         >
           <img
-            src="/logo1.png"
+            src="https://i.postimg.cc/FHfqgNSh/logo1.png"
             alt="Texela logo"
-            width={32}
-            height={32}
-            priority
           />
           <span className="ml-2 text-xl font-serif">Texela</span>
         </a>
