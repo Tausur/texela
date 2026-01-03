@@ -46,7 +46,7 @@ export default function Features() {
           >
             <div
               className="text-3xl mb-4 w-12 h-12 flex items-center justify-center
-              rounded-full bg-gradient-to-br from-purple-500 to-cyan-400 text-white
+              rounded-full bg-linear-to-br from-purple-500 to-cyan-400 text-white
               group-hover:scale-110 transition-transform"
             >
               {feature.icon}
