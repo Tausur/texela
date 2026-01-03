@@ -18,7 +18,7 @@ Texela is a simple, browser-based SaaS that converts images into editable text u
 ## 🚀 Demo
 
 Live demo:  
-> _Add your deployed URL here_
+> _https://tausur.github.io/texela/_
 
 ---
 
@@ -37,5 +37,5 @@ Live demo:
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/texela.git
+git clone https://github.com/Tausur/texela.git
 cd texela

@@ -35,7 +35,15 @@ export default function UploadSection() {
     }
 
     const orderedFiles = items.map((item) => item.file);
-    convertImagesToPdf(orderedFiles, "Texela-Converted.pdf");
+     // Create timestamp
+    const now = new Date();
+    const timestamp = now
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .slice(0, 19); // YYYY-MM-DDTHH-MM-SS
+
+    const filename = `Texela-${timestamp}.pdf`;
+    convertImagesToPdf(orderedFiles, filename);
   };
 
   return (
