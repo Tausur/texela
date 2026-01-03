@@ -8,7 +8,7 @@ export default function NavbarWrapper({ children }) {
   const [navbarHeight, setNavbarHeight] = useState(0);
 
   // Top offset of navbar (top-12 = 3rem = 48px)
-  const topOffset = 150;
+  const topOffset = 100;
 
   useEffect(() => {
     const updateHeight = () => {
