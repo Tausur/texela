@@ -20,7 +20,7 @@ export default function PreviewPage() {
     // Desktop layout
     return (
       <div className="h-screen flex">
-        <div className="w-[70%] border-r bg-gray-100">
+        <div className="w-[70%] border-r bg-gray-300">
           <PdfPreview />
         </div>
         <div className="w-[30%] p-4 bg-white">
