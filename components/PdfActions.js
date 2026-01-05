@@ -1,9 +1,15 @@
 "use client";
 
+import { useState } from 'react';
 import { getPdfBlob } from "../utils/pdfStore";
-import { Download, Share2, Printer, Cloud } from "lucide-react";
+import { Download, Share2, Printer, Cloud, Check } from "lucide-react";
+import DownloadToast from "./DownloadToast";
+
 
 export default function PdfActions() {
+
+  const [downloading, setDownloading] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
 
   const getPdfUrl = () => {
     const blob = getPdfBlob();
@@ -15,12 +21,24 @@ export default function PdfActions() {
     const blob = getPdfBlob();
     if (!blob) return;
 
+    setDownloading(true);
+    setDownloaded(false);
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `Texela-${new Date().toISOString()}.pdf`;
     a.click();
     URL.revokeObjectURL(url);
+
+    // Simulate completion feedback (mobile UX)
+    setTimeout(() => {
+      setDownloading(false);
+      setDownloaded(true);
+
+      // Hide success message after 3s
+      setTimeout(() => setDownloaded(false), 3000);
+    }, 800);
   };
 
   /* 🖨 Print */
@@ -62,10 +80,29 @@ export default function PdfActions() {
     <div className="space-y-4">
       <button
         onClick={handleDownload}
-        className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 cursor-pointer"
+        disabled={downloading}
+        className={`w-full py-2 rounded-lg font-medium transition flex items-center justify-center gap-2
+        ${
+          downloading
+            ? "bg-purple-400 cursor-wait"
+            : "bg-purple-600 hover:bg-purple-700 text-white cursor-pointer"
+        }`}
       >
-        Download PDF
+        {downloading ? (
+          <>
+            <span className="animate-spin">⏳</span>
+            Downloading…
+          </>
+        ) : (
+          <>
+            <Download size={16} />
+            Download PDF
+          </>
+        )}
       </button>
+
+      {/* Success feedback (mobile-friendly) */}
+      <DownloadToast visible={downloaded} />
 
       {/* Action Row */}
       <div className="flex items-center justify-between gap-2">

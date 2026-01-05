@@ -17,11 +17,32 @@ export default function PdfPreview() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1);
+
+  
   const containerRef = useRef(null);
+  const pdfWrapperRef = useRef(null);  // ACTUAL width source
   const pageRefs = useRef([]);
+  const [pageWidth, setPageWidth] = useState(600);
 
   useEffect(() => {
     setBlob(getPdfBlob());
+  }, []);
+
+  /* 🔹 Measure PDF wrapper width */
+  useEffect(() => {
+    if (!pdfWrapperRef.current) return;
+
+    const updateWidth = () => {
+      const width = pdfWrapperRef.current.clientWidth;
+      if (width > 0) setPageWidth(width);
+    };
+
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(pdfWrapperRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
   if (!blob) return <p className="p-4">No PDF found</p>;
@@ -66,7 +87,7 @@ export default function PdfPreview() {
       <div ref={containerRef}
         onScroll={handleScroll}
         className="h-full w-full overflow-auto flex justify-center p-4">
-        <div className="w-full max-w-[700px]">
+        <div ref={pdfWrapperRef} className="w-full max-w-[700px]">
           <Document file={blob} onLoadSuccess={onDocumentLoadSuccess}>
             {Array.from(new Array(numPages), (el, index) => (
               <div
@@ -76,8 +97,8 @@ export default function PdfPreview() {
               >
                 <Page
                   key={`page_${index + 1}`}
-                  pageNumber={index+1}
-                  scale={scale}
+                  pageNumber={index + 1}
+                  width={pageWidth * scale}
                   className="mx-auto mb-2"
                 />
               </div>

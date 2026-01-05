@@ -37,7 +37,7 @@ export default function Navbar() {
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl bg-white rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.18)]">
       <div className="flex items-center justify-between px-6 py-3">
         {/* Logo */}
-        <a
+        <Link
           href="/"
           className="flex items-center font-bold text-black cursor-pointer transition-transform duration-300 hover:scale-105"
         >
@@ -46,7 +46,7 @@ export default function Navbar() {
             alt="Texela logo"
           />
           <span className="ml-2 text-xl font-serif">Texela</span>
-        </a>
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden lg:flex space-x-6">
@@ -87,8 +87,11 @@ export default function Navbar() {
       >
         <div className="border-t mx-6 my-2" />
         <div className="px-6 pb-4 flex flex-col space-y-2">
-          {navLinks.map((link) => (
-            <button
+          {navLinks.map((link) => {
+            const href = link === "Convert" ? "/" : `/${link.toLowerCase()}`;
+        return (
+            <Link
+              href={href}
               key={link}
               onClick={() => {
                 setActiveLink(link);
@@ -97,8 +100,8 @@ export default function Navbar() {
               className="px-4 py-2 rounded-full text-black font-medium text-left transition-all duration-300 hover:bg-gray-100 hover:scale-105"
             >
               {link}
-            </button>
-          ))}
+            </Link>
+          )})}
         </div>
       </div>
     </nav>
